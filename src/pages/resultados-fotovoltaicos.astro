@@ -8,7 +8,7 @@ const pageTitle = 'Resultados de Cálculos Fotovoltaicos';
     <title>{pageTitle}</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900">
+<body class="bg-gray-100 dark:bg-gray-100">
     <header class="bg-blue-500 text-white p-4">
         <h1>{pageTitle}</h1>
     </header>
@@ -38,42 +38,49 @@ const pageTitle = 'Resultados de Cálculos Fotovoltaicos';
                         <td class="px-6 py-4">Consumo DC</td>
                         <td id="consumoDC" class="px-6 py-4">N/A</td> 
                     </tr>
+                    <tr>
+                        <td class="px-6 py-4">Consumo diario</td>
+                        <td id="consumo" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Baterias en paralelo</td>
+                        <td id="batPar" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Baterias en serie</td>
+                        <td id="batSer" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Total de baterias</td>
+                        <td id="totalBat" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Amperes pico del arreglo</td>
+                        <td id="corPic" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Modulos en paralelo</td>
+                        <td id="modPar" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Modulos en serie</td>
+                        <td id="modSer" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Total de módulos</td>
+                        <td id="totalMod" class="px-6 py-4">N/A</td> 
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Capacidad cortocircuito</td>
+                        <td id="capCor" class="px-6 py-4">N/A</td> 
+                    </tr>
                 </tbody>
             </table>
         </div>
         <a href="/fotovoltaico" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Volver</a>
     </main>
-    <footer class="bg-blue-500 text-white p-4 text-center">
-        <p>&copy; 2024 Mi Sitio Fotovoltaico</p>
+    <footer class="bg-blue-900 text-white p-4 text-center">
+        <p>&copy; 2024 Cálculos energéticos</p>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const datosGuardados = localStorage.getItem('resultados');
-            if (datosGuardados) {
-                const resultados = JSON.parse(datosGuardados);
-                console.log('Datos recuperados de localStorage:', resultados);
-
-                document.getElementById('totalWattsAC').textContent = resultados.totalWattsAC ?? 'N/A';
-                document.getElementById('totalWattsDC').textContent = resultados.totalWattsDC ?? 'N/A';
-                document.getElementById('consumoAC').textContent = resultados.consumoAC ?? 'N/A';
-                document.getElementById('consumoDC').textContent = resultados.consumoDC ?? 'N/A';
-
-                const parametrosTbody = document.getElementById('resultados-tbody');
-                Object.entries(resultados.parametros).forEach(([clave, valor]) => {
-                    const tr = document.createElement('tr');
-                    const tdClave = document.createElement('td');
-                    const tdValor = document.createElement('td');
-                    tdClave.textContent = clave;
-                    tdClave.className = 'px-6 py-4';
-                    tdValor.textContent = String(valor ?? 'N/A');
-                    tdValor.className = 'px-6 py-4';
-                    tr.appendChild(tdClave);
-                    tr.appendChild(tdValor);
-                    parametrosTbody.appendChild(tr);
-                });
-            } else {
-                console.warn('No se encontraron datos en localStorage');
-            }
-        });
-    </script>
+    <script src="../scripts/getResultados.js"></script>
 </body>
