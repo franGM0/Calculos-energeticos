@@ -1,12 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TablaDispositivos from '../components/Tabla-Dispositivos.astro';
-const pageTitle = 'Cálculos para sistemas fotovoltaicos'
-
+import TablaParametros from '../components/Tabla-parametros.astro';
+const pageTitle = 'Cálculos para sistemas fotovoltaicos';
 ---
 
-<BaseLayout pageTitle= {pageTitle}>	
+<BaseLayout pageTitle={""}>
+    <div class="flex">
+        <div class="w-3/4 p-2">
+            <TablaDispositivos/>
+        </div>
+        <div class="w-1/4 p-2">
+            <TablaParametros/>
+        </div>
+    </div>
+    <button id="calcular-btn" class="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded">Calcular</button>
+    <script src="../scripts/calculos.js"></script>
 </BaseLayout>
-
-<br>
-<TablaDispositivos/>

@@ -1,9 +1,10 @@
+---
 
-
+---
 
 <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-100 dark:text-gray-300">
+        <thead class="text-xs text-gray-600 uppercase bg-gray-500 dark:bg-blue-900 dark:text-gray-100">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     Descripción de la carga
@@ -12,21 +13,112 @@
                     Cantidad
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Potencia (W)
+                    Potencia
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Tiempo de operación (h/dia)
+                    Tiempo de operación
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Dias uso semanal
+                    Días uso semanal
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Consumo de energía (Wh/dia)
+                    Consumo de energía
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    AC o DC
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tabla-cuerpo" class="dark:text-gray-500">
 
         </tbody>
     </table>
 </div>
+
+
+<button id="agregar-fila-btn" class="mt-4 px-4 py-2 bg-yellow-500 text-white rounded">Agregar Fila</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const boton = document.getElementById('agregar-fila-btn');
+        boton.addEventListener('click', agregarFila);
+
+        function agregarFila() {
+            const tbody = document.getElementById('tabla-cuerpo');
+            const nuevaFila = document.createElement('tr');
+
+            nuevaFila.innerHTML = `
+            <tr>
+    <td class="px-6 py-4">
+        <input type="text" class="w-full px-2 py-1 border rounded" placeholder="">
+    </td>
+    <td class="px-6 py-4">
+        <input type="number" class="w-full px-2 py-1 border rounded cantidad" placeholder="">
+    </td>
+    <td class="px-6 py-4">
+        <input type="number" class="w-full px-2 py-1 border rounded potencia" placeholder="W">
+    </td>
+    <td class="px-6 py-4">
+        <input type="number" class="w-full px-2 py-1 border rounded tiempo" placeholder="h/dia">
+    </td>
+    <td class="px-6 py-4">
+        <input type="number" class="w-full px-2 py-1 border rounded dias" placeholder="">
+    </td>
+    <td class="px-6 py-4">
+        <input type="number" class="w-full px-1 py-1 consumo-energia" placeholder="" >
+    </td>
+    <td class="px-6 py-4">
+        <select>
+            <option>AC</option>
+            <option>DC</option> 
+        </select>
+    </td>
+    <td class="px-6 py-4">
+        <button class="eliminar-fila-btn px-4 py-2 bg-yellow-950 text-white rounded">Eliminar</button>
+    </td>
+</tr>
+
+            `;
+
+            tbody.appendChild(nuevaFila);
+            agregarEventosEliminar(nuevaFila);
+            agregarEventosCalculo(nuevaFila);
+        }  
+
+        function agregarEventosEliminar(fila) {
+            const botonEliminar = fila.querySelector('.eliminar-fila-btn');
+            botonEliminar.addEventListener('click', eliminarFila);
+        }
+
+        function eliminarFila(event) {
+            const fila = event.target.closest('tr');
+            fila.remove();
+        }
+
+        function agregarEventosCalculo(fila) {
+            const inputs = fila.querySelectorAll('.cantidad, .potencia, .tiempo, .dias');
+            inputs.forEach(input => {
+                input.addEventListener('input', calcularConsumo);
+            });
+        }
+
+        function calcularConsumo(event) {
+            const fila = event.target.closest('tr');
+            const cantidad = parseFloat(fila.querySelector('.cantidad').value) || 0;
+            const potencia = parseFloat(fila.querySelector('.potencia').value) || 0;
+            const tiempo = parseFloat(fila.querySelector('.tiempo').value) || 0;
+            const dias = parseFloat(fila.querySelector('.dias').value) || 0;
+            const consumoEnergia = fila.querySelector('.consumo-energia');
+
+            if (cantidad > 0 && potencia > 0 && tiempo > 0 && dias > 0) {
+                const consumo = (cantidad * potencia * tiempo * dias) / 7;
+                consumoEnergia.value = consumo.toFixed(2); // Redondea a 2 decimales
+            } else {
+                consumoEnergia.value = '';
+            }
+        }
+
+        agregarFila(); // Agregar una fila por defecto al cargar la página
+    });
+</script>
+

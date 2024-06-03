@@ -1,0 +1,79 @@
+---
+const pageTitle = 'Resultados de Cálculos Fotovoltaicos';
+---
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{pageTitle}</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <header class="bg-blue-500 text-white p-4">
+        <h1>{pageTitle}</h1>
+    </header>
+    <main class="container mx-auto p-4">
+        <div id="resultados-container" class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-100 dark:text-gray-300">
+                <thead class="text-xs text-gray-600 uppercase bg-gray-500 dark:bg-blue-900 dark:text-gray-100">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Descripción</th>
+                        <th scope="col" class="px-6 py-3">Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="resultados-tbody" class="dark:text-gray-500">
+                    <tr>
+                        <td class="px-6 py-4">Total Watts AC</td>
+                        <td id="totalWattsAC" class="px-6 py-4">N/A</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Total Watts DC</td>
+                        <td id="totalWattsDC" class="px-6 py-4">N/A</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Consumo AC</td>
+                        <td id="consumoAC" class="px-6 py-4">N/A</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4">Consumo DC</td>
+                        <td id="consumoDC" class="px-6 py-4">N/A</td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="/fotovoltaico" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Volver</a>
+    </main>
+    <footer class="bg-blue-500 text-white p-4 text-center">
+        <p>&copy; 2024 Mi Sitio Fotovoltaico</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const datosGuardados = localStorage.getItem('resultados');
+            if (datosGuardados) {
+                const resultados = JSON.parse(datosGuardados);
+                console.log('Datos recuperados de localStorage:', resultados);
+
+                document.getElementById('totalWattsAC').textContent = resultados.totalWattsAC ?? 'N/A';
+                document.getElementById('totalWattsDC').textContent = resultados.totalWattsDC ?? 'N/A';
+                document.getElementById('consumoAC').textContent = resultados.consumoAC ?? 'N/A';
+                document.getElementById('consumoDC').textContent = resultados.consumoDC ?? 'N/A';
+
+                const parametrosTbody = document.getElementById('resultados-tbody');
+                Object.entries(resultados.parametros).forEach(([clave, valor]) => {
+                    const tr = document.createElement('tr');
+                    const tdClave = document.createElement('td');
+                    const tdValor = document.createElement('td');
+                    tdClave.textContent = clave;
+                    tdClave.className = 'px-6 py-4';
+                    tdValor.textContent = String(valor ?? 'N/A');
+                    tdValor.className = 'px-6 py-4';
+                    tr.appendChild(tdClave);
+                    tr.appendChild(tdValor);
+                    parametrosTbody.appendChild(tr);
+                });
+            } else {
+                console.warn('No se encontraron datos en localStorage');
+            }
+        });
+    </script>
+</body>
