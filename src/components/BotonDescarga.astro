@@ -1,0 +1,17 @@
+---
+const pdfFileName = 'HTML.pdf'; // Nombre del archivo PDF
+---
+
+<button id="downloadBtn">Descargar PDF</button>
+
+<script>
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    const pdfFileName = 'mi-archivo.pdf'; // Inserta el nombre del archivo PDF aquí también
+    const link = document.createElement('a');
+    link.href = `/${pdfFileName}`;
+    link.download = pdfFileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+</script>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TablaDispositivos from '../components/Tabla-Dispositivos.astro';
 import TablaParametros from '../components/Tabla-parametros.astro';
+import BotonDescarga from '../components/BotonDescarga.astro';
 const pageTitle = 'Cálculos para sistemas fotovoltaicos';
 ---
 
@@ -15,5 +16,6 @@ const pageTitle = 'Cálculos para sistemas fotovoltaicos';
         </div>
     </div>
     <button id="calcular-btn" class="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded">Calcular</button>
+    <BotonDescarga/>
     <script src="../scripts/calculos.js"></script>
 </BaseLayout>
