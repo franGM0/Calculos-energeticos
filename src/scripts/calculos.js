@@ -1,103 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Script cargado');
 
-    const calcularTotalWattsAC = () => {
+    const precalculos = () => {
         let totalWattsAC = 0;
-        document.querySelectorAll('#tabla-cuerpo tr').forEach((fila, index) => {
-            const tipoSelect = fila.querySelector('select');
-            const cantidadInput = fila.querySelector('.cantidad');
-            const potenciaInput = fila.querySelector('.potencia');
-
-            if (tipoSelect && cantidadInput && potenciaInput) {
-                const tipo = tipoSelect.value;
-                if (tipo === 'AC') {
-                    const cantidad = parseFloat(cantidadInput.value) || 0;
-                    const potencia = parseFloat(potenciaInput.value) || 0;
-                    totalWattsAC += cantidad * potencia;
-                }
-            } else {
-                console.warn(`Fila ${index + 1} incompleta:`, {
-                    tipoSelect,
-                    cantidadInput,
-                    potenciaInput
-                });
-            }
-        });
-        return totalWattsAC;
-    };
-
-    const calcularConsumoAC = () => {
-        let consumoAC = 0;
-
-        document.querySelectorAll('#tabla-cuerpo tr').forEach((fila, index) => {
-            const tipoSelect = fila.querySelector('select');
-            const consumoEnergiaInput = fila.querySelector('.consumo-energia');
-
-            if (tipoSelect && consumoEnergiaInput) {
-                const tipo = tipoSelect.value;
-                if (tipo === 'AC') {
-                    const consumoEnergia = parseFloat(consumoEnergiaInput.value) || 0;;
-                    consumoAC += consumoEnergia;
-                }
-            } else {
-                console.warn(`Fila ${index + 1} incompleta:`, {
-                    tipoSelect,
-                    consumoEnergiaInput,
-                    
-                });
-            }
-        });
-        return consumoAC;       
-    }
-
-    const calcularTotalWattsDC = () => {
         let totalWattsDC = 0;
+        let consumoDC    = 0;
+        let consumoAC    = 0;
+
         document.querySelectorAll('#tabla-cuerpo tr').forEach((fila, index) => {
             const tipoSelect = fila.querySelector('select');
             const cantidadInput = fila.querySelector('.cantidad');
             const potenciaInput = fila.querySelector('.potencia');
+            const consumoEnergiaInput = fila.querySelector('.consumo-energia');
+            
 
             if (tipoSelect && cantidadInput && potenciaInput) {
                 const tipo = tipoSelect.value;
+                if (tipo === 'AC') {
+                    const cantidad = parseFloat(cantidadInput.value) || 0;
+                    const potencia = parseFloat(potenciaInput.value) || 0;
+                    const consumoEnergia = parseFloat(consumoEnergiaInput.value) || 0;
+
+                    totalWattsAC += cantidad * potencia;
+                    consumoAC += consumoEnergia;
+
+                }
                 if (tipo === 'DC') {
                     const cantidad = parseFloat(cantidadInput.value) || 0;
                     const potencia = parseFloat(potenciaInput.value) || 0;
+                    const consumoEnergia = parseFloat(consumoEnergiaInput.value) || 0;
+
                     totalWattsDC += cantidad * potencia;
+                    consumoDC += consumoEnergia;
+
                 }
             } else {
                 console.warn(`Fila ${index + 1} incompleta:`, {
                     tipoSelect,
                     cantidadInput,
-                    potenciaInput
+                    potenciaInput,
+                    consumoEnergiaInput
+
                 });
             }
         });
-        return totalWattsDC;
+        return [totalWattsAC, totalWattsDC, consumoAC, consumoDC];
     };
-
-    const calcularConsumoDC = () => {
-        let consumoDC = 0;
-
-        document.querySelectorAll('#tabla-cuerpo tr').forEach((fila, index) => {
-            const tipoSelect = fila.querySelector('select');
-            const consumoEnergiaInput = fila.querySelector('.consumo-energia');
-
-            if (tipoSelect && consumoEnergiaInput) {
-                const tipo = tipoSelect.value;
-                if (tipo === 'DC') {
-                    const consumoEnergia = parseFloat(consumoEnergiaInput.value) || 0;;
-                    consumoDC += consumoEnergia;
-                }
-            } else {
-                console.warn(`Fila ${index + 1} incompleta:`, {
-                    tipoSelect,
-                    consumoEnergiaInput,
-                    
-                });
-            }
-        });
-        return consumoDC;       
-    }
 
     const obtenerValoresTablaParametros = () => {
         const parametros = {};
@@ -116,15 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const realizarCalculos = () => {
         console.log('Realizando cálculos');
-
-        const totalWattsAC = calcularTotalWattsAC();
-        const totalWattsDC = calcularTotalWattsDC();
-        const consumoAC    = calcularConsumoAC();
-        const consumoDC    = calcularConsumoDC();
+        
+        const [totalWattsAC, totalWattsDC, consumoAC, consumoDC] = precalculos();
         const parametros   = obtenerValoresTablaParametros();
 
         
-
         const resultados = {
             totalWattsAC,
             totalWattsDC,
