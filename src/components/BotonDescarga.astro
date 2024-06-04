@@ -1,14 +1,21 @@
+---
+const { filePath, nombre } = Astro.props;
+---
 
-<button id="downloadBtn">Descargar PDF</button>
+<button id="downloadBtn" data-file-path={filePath} class="bg-yellow-500 hover:bg-red-700 text-white  py-1 px-2 rounded">{nombre}</button>
 
 <script>
-  document.getElementById('downloadBtn').addEventListener('click', function() {
-    const pdfFileName = 'HTML.pdf'; // Inserta el nombre del archivo PDF aquí también
-    const link = document.createElement('a');
-    link.href = `/${pdfFileName}`;
-    link.download = pdfFileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      const pdfFilePath = this.getAttribute('data-file-path');
+      const link = document.createElement('a');
+      link.href = pdfFilePath;
+      link.download = pdfFilePath.split('/').pop(); // Obtiene el nombre del archivo desde la ruta
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   });
 </script>
+
+
