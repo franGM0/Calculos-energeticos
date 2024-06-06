@@ -1,21 +1,26 @@
 ---
-const { filePath, nombre } = Astro.props;
+export interface Props {
+  nombre: string;
+  filePath: string;
+  clase: string;
+}
+const { nombre, filePath, clase } = Astro.props;
 ---
 
-<button id="downloadBtn" data-file-path={filePath} class="bg-yellow-500 hover:bg-red-700 text-white  py-1 px-2 rounded">{nombre}</button>
+<button class={clase} data-file-path={filePath}>{nombre}</button>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-      const pdfFilePath = this.getAttribute('data-file-path');
-      const link = document.createElement('a');
-      link.href = pdfFilePath;
-      link.download = pdfFilePath.split('/').pop(); // Obtiene el nombre del archivo desde la ruta
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    document.querySelectorAll('.downloadBtn').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const pdfFilePath = this.getAttribute('data-file-path');
+        const link = document.createElement('a');
+        link.href = pdfFilePath;
+        link.download = pdfFilePath.split('/').pop(); // Obtiene el nombre del archivo desde la ruta
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
     });
   });
 </script>
-
-

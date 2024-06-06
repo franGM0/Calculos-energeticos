@@ -1,8 +1,89 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const pageTitle = 'Cables'
+import TablaCables from '../components/Tabla-cables.astro';
+import TablaMayor40 from '../components/Tabla-mayor40.astro';
+import TablaMenor40 from '../components/Tabla-menor40.astro';
+import BotonDescarga from '../components/BotonDescarga.astro';
+const pageTitle = 'Calculo de cables'
+
 
 ---
 
-<BaseLayout pageTitle= {pageTitle}>	
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+         const longitudInput = document.querySelector('input[name="longitud"]');
+            const potenciaInput = document.querySelector('input[name="potencia"]');
+            const tensionInput = document.querySelector('input[name="tension"]');
+            const factorPotenciaInput = document.querySelector('input[name="factor_potencia"]');
+            const tipoAlimentacionSelect = document.querySelector('select[name="alimentacion"]');
+
+            if (longitudInput instanceof HTMLInputElement && 
+                potenciaInput instanceof HTMLInputElement && 
+                tensionInput instanceof HTMLInputElement && 
+                factorPotenciaInput instanceof HTMLInputElement && 
+                tipoAlimentacionSelect instanceof HTMLSelectElement) {
+
+                const longitud = parseFloat(longitudInput.value);
+                const potencia = parseFloat(potenciaInput.value);
+                const tension = parseFloat(tensionInput.value);
+                const factorPotencia = parseFloat(factorPotenciaInput.value) / 100;
+                const tipoAlimentacion = tipoAlimentacionSelect.value;
+
+                
+                }
+
+                const mayor40 = document.getElementById('tablaMayor40');
+        const menor40 = document.getElementById('tablaMenor40');
+
+        function handleInputChange(event) {
+            const value = parseFloat(event.target.value);
+            if (!isNaN(value)) {
+                mayor40.style.display = value >= 40 ? 'table' : 'none';
+                menor40.style.display = value < 40 ? 'table' : 'none';
+            }
+        }
+
+        const input = document.querySelector('input[name="longitud"]');
+        input.addEventListener('input', handleInputChange);
+        
+
+    });
+</script>
+
+<BaseLayout pageTitle={pageTitle}>
+    <br>
+    <div class="flex items-center justify-center h-full">
+        <BotonDescarga nombre="Descargar archivo" filePath="CABLES.xlsx" clase="downloadBtn bg-yellow-500 hover:bg-purple-500 text-white text-2xl py-4 px-8 rounded-xl "/>
+    </div>
+    
+    <br>
+    <br>
+    <div class="flex items-center justify-center h-full">
+        <BotonDescarga nombre="Descargar manual de usuario" filePath="/manual_usuario_cables.pdf" clase="downloadBtn bg-yellow-500 hover:bg-purple-500 text-white text-2xl py-4 px-8 rounded-xl"/>
+    </div>
+
+    <br>
+    <br>
+    <br>
+     
+
+    
+    <!-- <div class="flex">
+        <div class="w-1/2 p-2">
+            <TablaCables />
+        </div>
+        <div class="w-1/2 p-2">
+            <div id="tablaMayor40">
+                <TablaMayor40 />
+            </div>
+            <br />
+            <div id="tablaMenor40">
+                <TablaMenor40 />
+            </div>
+        </div>
+    </div> -->
+
+    
 </BaseLayout>

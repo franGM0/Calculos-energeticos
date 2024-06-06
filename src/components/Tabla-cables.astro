@@ -1,0 +1,106 @@
+---
+const { onLengthChange } = Astro.props;
+---
+
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #FFA500;
+            color: black;
+        }
+        td {
+            background-color: #e7e6de;
+        }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #e7e6de
+        }
+    </style>
+
+<script>
+    function handleInputChange(event) {
+        const value = parseFloat(event.target.value);
+        if (!isNaN(value)) {
+            const tablaMayor40 = document.getElementById('tablaMayor40');
+            const tablaMenor40 = document.getElementById('tablaMenor40');
+
+            if (tablaMayor40 && tablaMenor40) {
+                tablaMayor40.style.display = value >= 40 ? 'table' : 'none';
+                tablaMenor40.style.display = value < 40 ? 'table' : 'none';
+            }
+        }
+    }
+</script>
+
+
+    <table>
+        <tr>
+            <th colspan="2" style="text-align: center;">Ingreso de datos</th>
+        </tr>
+        <tr>
+            <td>LONGITUD</td>
+            <td><input type="text" name="longitud" placeholder="m"></td>
+        </tr>
+        <tr>
+            <td>TIPO DE ALIMENTACIÓN</td>
+            <td>
+                <select name="alimentacion" id="alimentacionID">
+                    <option >Sistema monofásico</option>
+                    <option >Sistema trifásico</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>TENSIÓN</td>
+            <td><input type="number" name="tension"  placeholder="V"></td>
+        </tr>
+        <tr>
+            <td>POTENCIA (KW)</td>
+            <td><input type="number" name="potencia"  placeholder="kW"></td>
+        </tr>
+        <tr>
+            <td>CAIDA DE TENSIÓN (0 % - 5 %)</td>
+            <td><input type="number" name="caida_tension" placeholder="%"></td>
+        </tr>
+        <tr>
+            <td>AISLAMIENTO DEL CONDUCTOR</td>
+            <td>
+                <select name="aislamiento" id="aislamientoID">
+                    <option >EPR o XLPE</option>
+                    <option >PVC 70°C</option>
+                </select>
+            </td>
+
+        </tr>
+        <tr>
+            <td>TEMPERATURA </td>
+            <td><input type="number" name="temperatura" placeholder="°C"></td>
+        </tr>
+        <tr>
+            <td>FORMA DE MONTAR</td>
+            <td>
+                <select name="montar" id="montarId">
+                    <option >1 a 7</option>
+                    <option >8 a 13</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>FACTOR DE CORRECCIÓN X AGRUPAMIENTO</td>
+            <td><input type="number" name="factor_correccion" placeholder="%"></td>
+        </tr>
+        <tr>
+            <td>FACTOR DE POTENCIA</td>
+            <td><input type="number" name="factor_potencia" placeholder="%"></td>
+        </tr>
+    </table>

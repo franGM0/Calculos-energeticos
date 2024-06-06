@@ -1,0 +1,78 @@
+---
+
+---
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #FFD700;
+            color: black;
+        }
+        td {
+            background-color: #FFF8DC;
+        }
+        .highlight {
+            background-color: #FFA500;
+            text-align: center;
+        }
+        .highlight td {
+            text-align: center;
+        }
+    </style>
+
+
+    <table id="tablaMayor40">
+        <tr>
+            <td colspan="4" class="highlight">MIRAR SOLO SI ES EL CALCULO PARA >= 40 Metros</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: #aceff0">Como la longitud es mayor a 40 metros, es conveniente iniciar el cálculo con el criterio de caída de tensión y verificar la sección obtenida con el criterio de capacidad de conduccion.</td>
+        </tr>
+        <tr>
+            <td>I = CORRIENTE (A)</td>
+            <td colspan="3" id="corrienteMayor40"></td>
+        </tr>
+        <tr>
+            <td>DELTA V</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>K Calculada</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: #aceff0">K se aproxima al valor inferior más cercano en la tabla 5.17 y con ella encontramos el valor de la sección transversal del conductor</td>
+        </tr>
+        <tr>
+            <td>Seccion Transversal (mm2)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: #aceff0">Factor de correccion por temperatura se toma de la tabla 5.6</td>
+        </tr>
+        <tr>
+            <td>Fc (Es la misma para < 40 y >=40)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>I' = CORRIENTE EQUIVALENTE (A)</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: #aceff0">SE MIRA SI EN LA TABLA 5.4a EPR XLPE 1-7 (2 CONDUCTORES) EL VALOR DE LA CORRIENTE SOPORTADA POR LA SECCIÓN TRANSVERSAL DE: 35mm2 ES MAYOR A LA CORRIENTE REQUERIDA 127.187627187627, EN TAL CASO EL AREA TRANSVERSAL CALCULADO CON EL CRITERIO DE TENSION ES CORRECTO, SINO TIENE QUE TOMARSE EL AREA TRANSVERSAL REQUERIDO POR LA CORRIENTE</td>
+        </tr>
+        <tr>
+            <td class="highlight" >Seccion Transversal definitiva (mm2)</td>
+            <td class="highlight" ></td>
+        </tr>
+    </table>
+
+
